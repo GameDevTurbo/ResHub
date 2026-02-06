@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>土地性质风险自查指南 - Land Risk Check Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "微软雅黑", sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            font-size: 1.8em;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        header p {
+            font-size: 0.95em;
+            opacity: 0.95;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 20px;
+            padding-bottom: 100px;
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 1.6em;
+            margin: 20px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin: 20px 0 12px 0;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .warning-box strong {
+            color: #856404;
+            font-size: 1.1em;
+        }
+        
+        .card {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .card h3 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .card-icon {
+            font-size: 1.5em;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+        
+        td {
+            background: #f8f9ff;
+        }
+        
+        .checklist-item {
+            background: #f5f5f5;
+            padding: 15px;
+            margin: 12px 0;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .checklist-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+        }
+        
+        .checklist-item.checked {
+            background: #e8f5e9;
+            border-color: #4caf50;
+        }
+        
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #666;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .checklist-item.checked .checkbox {
+            background: #4caf50;
+            border-color: #4caf50;
+        }
+        
+        .checklist-item.checked .checkbox::after {
+            content: "✓";
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .checklist-text {
+            flex: 1;
+        }
+        
+        .checklist-item.checked .checklist-text {
+            color: #4caf50;
+            text-decoration: line-through;
+        }
+        
+        .tab-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        
+        .tab-button {
+            flex: 1;
+            padding: 12px 8px;
+            border: none;
+            background: white;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.85em;
+            border-top: 3px solid transparent;
+        }
+        
+        .tab-button:hover {
+            background: #f5f5f5;
+        }
+        
+        .tab-button.active {
+            color: #667eea;
+            border-top-color: #667eea;
+            background: #f8f9ff;
+        }
+        
+        .tab-icon {
+            font-size: 1.8em;
+        }
+        
+        .highlight {
+            background: #fff176;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        strong {
+            color: #667eea;
+        }
+        
+        ul {
+            margin: 15px 0 15px 25px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding-bottom: 70px;
+            }
+            
+            header h1 {
+                font-size: 1.4em;
+            }
+            
+            header p {
+                font-size: 0.85em;
+            }
+            
+            .tab-content {
+                padding: 15px;
+                padding-bottom: 90px;
+            }
+            
+            h2 {
+                font-size: 1.3em;
+            }
+            
+            h3 {
+                font-size: 1.1em;
+            }
+            
+            .card {
+                padding: 15px;
+            }
+            
+            .tab-button {
+                padding: 10px 5px;
+                font-size: 0.75em;
+            }
+            
+            .tab-icon {
+                font-size: 1.5em;
+            }
+            
+            th, td {
+                padding: 8px;
+                font-size: 0.9em;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tab-button {
+                font-size: 0.7em;
+            }
+            
+            .tab-icon {
+                font-size: 1.3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚠️ 土地性质风险自查指南</h1>
+            <p>建房前必查：避免耕地建房的法律风险</p>
+        </header>
+        
+        <!-- Tab 1: 核心风险 -->
+        <div id="tab1" class="tab-content active">
+            <h2>为什么要先查土地性质？</h2>
+            
+            <div class="warning-box">
+                <strong>⚠️ 核心警告</strong>
+                <p>如果您建房的土地属于<strong>耕地（特别是基本农田）</strong>，房屋确权将<span class="highlight">100%失败</span>，并且可能面临：</p>
+                <ul>
+                    <li>🚫 <strong>强制拆除</strong>房屋，且不予补偿</li>
+                    <li>💰 处以<strong>建设工程造价5%-10%的罚款</strong></li>
+                    <li>📜 <strong>永久无法办理</strong>不动产权证</li>
+                    <li>⚖️ 可能承担<strong>刑事责任</strong>（非法占用农用地罪）</li>
+                </ul>
+            </div>
+            
+            <h3>土地性质分类及后果</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>土地类型</th>
+                        <th>能否确权</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>宅基地</strong></td>
+                        <td style="color: #4caf50; font-weight: bold;">✅ 可以确权</td>
+                        <td>符合"一户一宅"政策，可正常办理确权</td>
+                    </tr>
+                    <tr>
+                        <td><strong>耕地/基本农田</strong></td>
+                        <td style="color: #dc3545; font-weight: bold;">❌ 强制拆除+罚款</td>
+                        <td>违反土地管理法，属于违法建筑，必须拆除</td>
+                    </tr>
+                    <tr>
+                        <td><strong>集体建设用地</strong></td>
+                        <td style="color: #ffc107; font-weight: bold;">⚠️ 需补办审批</td>
+                        <td>需补办用地审批手续后才能确权</td>
+                    </tr>
+                    <tr>
+                        <td><strong>空闲地/荒地</strong></td>
+                        <td style="color: #ffc107; font-weight: bold;">⚠️ 看审批情况</td>
+                        <td>需确认是否属于耕地范畴，能否转为建设用地</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="card">
+                <h3><span class="card-icon">💡</span>关键提示</h3>
+                <p><strong>第三次全国国土调查（"三调"）数据是唯一权威依据</strong></p>
+                <p>2019年完成的"三调"地图已将全国每一块土地的性质精确标注，这是自然资源部门执法和确权登记的唯一标准。即使村里说"这是荒地"或"以前就是空地"，只要"三调"数据显示为耕地，就无法确权。</p>
+            </div>
+        </div>
+        
+        <!-- Tab 2: 如何查询 -->
+        <div id="tab2" class="tab-content">
+            <h2>如何查询土地性质？</h2>
+            <p>有以下3种方法可以查询建房地块的土地性质：</p>
+            
+            <div class="card">
+                <h3><span class="card-icon">🏛️</span>方法一：去镇政府查"三调"地图（最权威）</h3>
+                <p><strong>去哪里：</strong></p>
+                <ul>
+                    <li>乡镇政府的<strong>自然资源所</strong>（或叫国土资源所、自然资源和规划所）</li>
+                    <li>部分地区也可以去<strong>县自然资源局</strong>查询</li>
+                </ul>
+                <p><strong>查什么：</strong></p>
+                <ul>
+                    <li>请工作人员帮您查询<strong>该地块的土地利用现状分类</strong></li>
+                    <li>提供地块的具体位置（最好有坐标或详细地址）</li>
+                </ul>
+                <p><strong>看什么：</strong></p>
+                <ul>
+                    <li>📕 <strong>红色区域</strong> = 建设用地（安全，可以建房）</li>
+                    <li>📗 <strong>黄绿色区域</strong> = 耕地（危险，不能建房）</li>
+                    <li>建议<strong>拍照或抄写</strong>土地类型代码（如"0203"代表水浇地）</li>
+                </ul>
+                <p><span class="highlight">这是最权威、最保险的方法</span></p>
+            </div>
+            
+            <div class="card">
+                <h3><span class="card-icon">📄</span>方法二：查兄弟的宅基地证</h3>
+                <p><strong>为什么查兄弟的证：</strong></p>
+                <ul>
+                    <li>您的房子是在兄弟的宅基地上建的</li>
+                    <li>宅基地证上标注了<strong>批准使用的范围和面积</strong></li>
+                </ul>
+                <p><strong>怎么看：</strong></p>
+                <ul>
+                    <li>查看证书上的<strong>宅基地四至范围</strong>（东至、西至、南至、北至）</li>
+                    <li>查看<strong>批准面积</strong>是否包含您建房的位置</li>
+                    <li>如果您建房的位置<strong>在批准范围之外</strong>，说明可能占用了耕地</li>
+                </ul>
+                <p><strong>注意：</strong>宅基地证只能证明批准范围内是宅基地，超出部分不一定是宅基地</p>
+            </div>
+            
+            <div class="card">
+                <h3><span class="card-icon">👴</span>方法三：问村里老会计/老支书</h3>
+                <p><strong>问什么：</strong></p>
+                <ul>
+                    <li>这块地以前是什么用途？</li>
+                    <li>村里有没有给这块地办过建设用地审批？</li>
+                    <li>附近其他村民建房有没有遇到土地性质问题？</li>
+                </ul>
+                <p><strong>优点：</strong>可以快速了解地块的历史情况</p>
+                <p><strong>缺点：</strong></p>
+                <ul>
+                    <li>❌ <strong>不是法律证据</strong>，不能作为确权依据</li>
+                    <li>⚠️ 村干部的说法可能不准确或已过时</li>
+                    <li>⚠️ 最终还是要以"三调"数据为准</li>
+                </ul>
+                <p><span class="highlight">此方法仅供初步判断，不能代替官方查询</span></p>
+            </div>
+        </div>
+        
+        <!-- Tab 3: 补救办法 -->
+        <div id="tab3" class="tab-content">
+            <h2>如果是耕地，还有补救办法吗？</h2>
+            <p>如果查出是耕地，理论上有以下几种补救途径，但都<strong>有一定难度和成本</strong>：</p>
+            
+            <div class="card">
+                <h3><span class="card-icon">🔄</span>方案一："占补平衡"政策</h3>
+                <p><strong>什么是占补平衡：</strong></p>
+                <p>占用耕地建房后，在其他地方<strong>开垦同等面积、同等质量的耕地</strong>作为补偿，或者交钱让政府统一开垦。</p>
+                <p><strong>办理方式：</strong></p>
+                <ul>
+                    <li>向乡镇政府或县自然资源局申请</li>
+                    <li>缴纳<strong>耕地占用税</strong>和<strong>耕地开垦费</strong></li>
+                    <li>补办<strong>农用地转用审批手续</strong></li>
+                </ul>
+                <p><strong>成本：</strong></p>
+                <ul>
+                    <li>💰 费用较高，一般<strong>每平米几百元</strong>（各地标准不同）</li>
+                    <li>📅 审批周期长，可能需要<strong>半年到一年</strong></li>
+                </ul>
+                <p><strong>难点：</strong></p>
+                <ul>
+                    <li>❌ <strong>基本农田</strong>原则上不允许转用</li>
+                    <li>⚠️ 需要村集体和乡镇政府同意</li>
+                    <li>⚠️ 部分地区已停止办理个人占补平衡</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3><span class="card-icon">🏠</span>方案二："一户一宅"置换</h3>
+                <p><strong>什么是置换：</strong></p>
+                <p>如果家里有<strong>老宅基地</strong>，可以将老宅基地退回村集体，然后申请将新建房屋所在地转为宅基地。</p>
+                <p><strong>适用条件：</strong></p>
+                <ul>
+                    <li>✅ 家里有<strong>闲置的老宅基地</strong></li>
+                    <li>✅ 老宅基地面积不小于新房占地面积</li>
+                    <li>✅ 符合"一户一宅"政策（退旧建新）</li>
+                </ul>
+                <p><strong>办理流程：</strong></p>
+                <ul>
+                    <li>向村委会提出申请</li>
+                    <li>签订<strong>宅基地退出协议</strong></li>
+                    <li>拆除老宅基地上的建筑</li>
+                    <li>申请将新地块转为宅基地</li>
+                </ul>
+                <p><strong>难点：</strong></p>
+                <ul>
+                    <li>⚠️ 需要村集体同意</li>
+                    <li>⚠️ 占用<strong>基本农田</strong>的情况下，仍然很难办</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3><span class="card-icon">📸</span>方案三：保留证据等拆迁</h3>
+                <p><strong>如果前两种方案都行不通，建议：</strong></p>
+                <p><strong>1. 保留建房时间证据（越早越好）：</strong></p>
+                <ul>
+                    <li>📷 <strong>2008年之前</strong>的建房照片、录像</li>
+                    <li>💡 2008年之前的<strong>电费单、水费单</strong></li>
+                    <li>✍️ 邻居、村干部的<strong>书面证明</strong></li>
+                    <li>📜 旧的土地承包合同、村民会议记录等</li>
+                </ul>
+                <p><strong>2. 为什么要保留证据：</strong></p>
+                <ul>
+                    <li>🗓️ <strong>2008年是一个关键时间点</strong>：《城乡规划法》实施前的建筑</li>
+                    <li>🏚️ 如果能证明是<strong>"历史遗留违建"</strong>，拆迁时可能获得<strong>适当补偿</strong></li>
+                    <li>⚖️ 虽然仍是违建，但不会被"零补偿"强拆</li>
+                </ul>
+                <p><strong>3. 现实建议：</strong></p>
+                <ul>
+                    <li>⏸️ 暂停办理确权（办不下来）</li>
+                    <li>🏠 正常居住使用，不要扩建</li>
+                    <li>📝 保留所有证据材料</li>
+                    <li>👨‍⚖️ 遇到拆迁时，<strong>及时聘请律师</strong>争取合理补偿</li>
+                </ul>
+                <p><span class="highlight">注意：这不是合法化方案，只是现实情况下的风险对策</span></p>
+            </div>
+        </div>
+        
+        <!-- Tab 4: 行动清单 -->
+        <div id="tab4" class="tab-content">
+            <h2>行动清单</h2>
+            <p>按照以下步骤逐一完成，点击可标记完成状态：</p>
+            
+            <div class="checklist-item" onclick="toggleCheck(this)">
+                <div class="checkbox"></div>
+                <div class="checklist-text">
+                    <strong>步骤1：准备材料</strong><br>
+                    兄弟的宅基地证 + 户口本 + 房屋照片
+                </div>
+            </div>
+            
+            <div class="checklist-item" onclick="toggleCheck(this)">
+                <div class="checkbox"></div>
+                <div class="checklist-text">
+                    <strong>步骤2：去镇政府自然资源所查询土地性质</strong><br>
+                    查询该地块的"三调"数据，确认土地利用现状分类
+                </div>
+            </div>
+            
+            <div class="checklist-item" onclick="toggleCheck(this)">
+                <div class="checkbox"></div>
+                <div class="checklist-text">
+                    <strong>步骤3：拍照或抄写查询结果</strong><br>
+                    记录土地类型代码和颜色分区（红色=建设用地，黄绿色=耕地）
+                </div>
+            </div>
+            
+            <div class="checklist-item" onclick="toggleCheck(this)">
+                <div class="checkbox"></div>
+                <div class="checklist-text">
+                    <strong>步骤4：如果是宅基地 → 继续办确权</strong><br>
+                    按照正常流程准备材料，向村委会提交确权申请
+                </div>
+            </div>
+            
+            <div class="checklist-item" onclick="toggleCheck(this)">
+                <div class="checkbox"></div>
+                <div class="checklist-text">
+                    <strong>步骤5：如果是耕地 → 暂停确权，咨询补救方案</strong><br>
+                    立即停止确权办理，咨询律师或自然资源部门是否有补救办法
+                </div>
+            </div>
+            
+            <div class="checklist-item" onclick="toggleCheck(this)">
+                <div class="checkbox"></div>
+                <div class="checklist-text">
+                    <strong>步骤6：如果是建设用地 → 补办审批手续</strong><br>
+                    向乡镇政府申请补办建设用地审批，然后再办理确权
+                </div>
+            </div>
+            
+            <div class="warning-box" style="margin-top: 30px;">
+                <strong>⚠️ 重要提醒</strong>
+                <ul>
+                    <li>🕐 <strong>越早查越好</strong>：避免建房后才发现问题</li>
+                    <li>📞 遇到问题及时咨询专业人士（律师、自然资源部门）</li>
+                    <li>❌ 不要听信"花钱就能办"的中介，谨防诈骗</li>
+                    <li>📜 所有办理都要走正规渠道，保留书面证据</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Bottom Tab Bar -->
+        <div class="tab-bar">
+            <button class="tab-button active" onclick="switchTab(1)">
+                <span class="tab-icon">⚠️</span>
+                <span>核心风险</span>
+            </button>
+            <button class="tab-button" onclick="switchTab(2)">
+                <span class="tab-icon">🔍</span>
+                <span>如何查询</span>
+            </button>
+            <button class="tab-button" onclick="switchTab(3)">
+                <span class="tab-icon">🔧</span>
+                <span>补救办法</span>
+            </button>
+            <button class="tab-button" onclick="switchTab(4)">
+                <span class="tab-icon">✅</span>
+                <span>行动清单</span>
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        function switchTab(tabNumber) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active class from all tab buttons
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => button.classList.remove('active'));
+            
+            // Show selected tab content
+            document.getElementById('tab' + tabNumber).classList.add('active');
+            
+            // Add active class to selected button
+            buttons[tabNumber - 1].classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function toggleCheck(element) {
+            element.classList.toggle('checked');
+            
+            // Save state to localStorage
+            const checklistItems = document.querySelectorAll('.checklist-item');
+            const states = [];
+            checklistItems.forEach(item => {
+                states.push(item.classList.contains('checked'));
+            });
+            localStorage.setItem('landRiskChecklist', JSON.stringify(states));
+        }
+        
+        // Load saved checklist states on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const saved = localStorage.getItem('landRiskChecklist');
+            if (saved) {
+                const states = JSON.parse(saved);
+                const checklistItems = document.querySelectorAll('.checklist-item');
+                states.forEach((isChecked, index) => {
+                    if (isChecked && checklistItems[index]) {
+                        checklistItems[index].classList.add('checked');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
